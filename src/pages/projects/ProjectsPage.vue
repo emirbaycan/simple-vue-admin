@@ -49,7 +49,7 @@ const { confirm } = useModal()
 const onProjectDeleted = async (project: Project) => {
   const response = await confirm({
     title: 'Delete project',
-    message: `Are you sure you want to delete project "${project.project_name}"?`,
+    message: `Are you sure you want to delete project "${project.title}"?`,
     okText: 'Delete',
     size: 'small',
     maxWidth: '380px',

@@ -2,9 +2,6 @@
 import { computed, ref, watch } from 'vue'
 import { EmptyProject, Project } from '../types'
 import { SelectOption } from 'vuestic-ui'
-import { useUsers } from '../../users/composables/useUsers'
-import ProjectStatusBadge from '../components/ProjectStatusBadge.vue'
-import UserAvatar from '../../users/widgets/UserAvatar.vue'
 
 const props = defineProps<{
   project: Project | null
@@ -17,10 +14,12 @@ defineEmits<{
 }>()
 
 const defaultNewProject: EmptyProject = {
-  project_name: '',
-  project_owner: undefined,
-  team: [],
-  status: undefined,
+  title: 'Title',
+  description: 'Description',
+  imgs: '',
+  demo: '',
+  git: '',
+  stacks: '',
 }
 
 const newProject = ref({ ...defaultNewProject })
@@ -50,75 +49,22 @@ watch(
 
     newProject.value = {
       ...props.project,
-      project_owner: props.project.project_owner,
     }
   },
   { immediate: true },
 )
 
 const required = (v: string | SelectOption) => !!v || 'This field is required'
-
-const { users: teamUsers, filters: teamFilters } = useUsers({ pagination: ref({ page: 1, perPage: 100, total: 10 }) })
-const { users: ownerUsers, filters: ownerFilters } = useUsers({ pagination: ref({ page: 1, perPage: 100, total: 10 }) })
 </script>
 
 <template>
   <VaForm v-slot="{ validate }" class="flex flex-col gap-2">
-    <VaInput v-model="newProject.project_name" label="Project name" :rules="[required]" />
-    <VaSelect
-      v-model="newProject.project_owner"
-      v-model:search="ownerFilters.search"
-      searchable
-      label="Owner"
-      text-by="fullname"
-      track-by="id"
-      :rules="[required]"
-      :options="ownerUsers"
-    >
-      <template #content="{ value: user }">
-        <div v-if="user" :key="user.id" class="flex items-center gap-1 mr-4">
-          <UserAvatar :user="user" size="18px" />
-          {{ user.fullname }}
-        </div>
-      </template>
-    </VaSelect>
-    <VaSelect
-      v-model="newProject.team"
-      v-model:search="teamFilters.search"
-      label="Team"
-      text-by="fullname"
-      track-by="id"
-      multiple
-      :rules="[(v: any) => ('length' in v && v.length > 0) || 'This field is required']"
-      :options="teamUsers"
-      :max-visible-options="$vaBreakpoint.mdUp ? 3 : 1"
-    >
-      <template #content="{ valueArray }">
-        <template v-if="valueArray">
-          <div v-for="(user, index) in valueArray" :key="user.id" class="flex items-center gap-1 mr-2">
-            <UserAvatar :user="user" size="18px" />
-            {{ user.fullname }}{{ index < valueArray.length - 1 ? ',' : '' }}
-          </div>
-        </template>
-      </template>
-    </VaSelect>
-    <VaSelect
-      v-model="newProject.status"
-      label="Status"
-      :rules="[required]"
-      track-by="value"
-      value-by="value"
-      :options="[
-        { text: 'In progress', value: 'in progress' },
-        { text: 'Archived', value: 'archived' },
-        { text: 'Completed', value: 'completed' },
-        { text: 'Important', value: 'important' },
-      ]"
-    >
-      <template #content="{ value }">
-        <ProjectStatusBadge v-if="value" :status="value.value" />
-      </template>
-    </VaSelect>
+    <VaInput v-model="newProject.title" label="Project title" :rules="[required]" />
+    <VaInput v-model="newProject.description" label="Description" :rules="[required]" />
+    <VaInput v-model="newProject.imgs" label="Image links" :rules="[required]" />
+    <VaInput v-model="newProject.demo" label="Demo link" :rules="[required]" />
+    <VaInput v-model="newProject.git" label="Github link" :rules="[required]" />
+    <VaInput v-model="newProject.stacks" label="Stacks (sep by comma)" :rules="[required]" />
     <div class="flex justify-end flex-col-reverse sm:flex-row mt-4 gap-2">
       <VaButton preset="secondary" color="secondary" @click="$emit('close')">Cancel</VaButton>
       <VaButton @click="validate() && $emit('save', newProject as Project)">{{ saveButtonLabel }}</VaButton>

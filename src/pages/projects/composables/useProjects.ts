@@ -11,7 +11,7 @@ import { Project } from '../types'
 import { watchIgnorable } from '@vueuse/core'
 
 const makePaginationRef = () => ref<Pagination>({ page: 1, perPage: 10, total: 0 })
-const makeSortingRef = () => ref<Sorting>({ sortBy: 'creation_date', sortingOrder: 'desc' })
+const makeSortingRef = () => ref<Sorting>({ sortBy: 'created_at', sortingOrder: 'desc' })
 
 export const useProjects = (options?: { sorting?: Ref<Sorting>; pagination?: Ref<Pagination> }) => {
   const isLoading = ref(false)
@@ -45,12 +45,10 @@ export const useProjects = (options?: { sorting?: Ref<Sorting>; pagination?: Ref
 
     fetch,
 
-    async add(project: Omit<Project, 'id' | 'creation_date'>) {
+    async add(project: Project) {
       isLoading.value = true
       await addProject({
         ...project,
-        project_owner: project.project_owner.id,
-        team: project.team.map((user) => user.id),
       })
       await fetch()
       isLoading.value = false
@@ -60,8 +58,6 @@ export const useProjects = (options?: { sorting?: Ref<Sorting>; pagination?: Ref
       isLoading.value = true
       await updateProject({
         ...project,
-        project_owner: project.project_owner.id,
-        team: project.team.map((user) => user.id),
       })
       await fetch()
       isLoading.value = false
@@ -71,8 +67,6 @@ export const useProjects = (options?: { sorting?: Ref<Sorting>; pagination?: Ref
       isLoading.value = true
       await removeProject({
         ...project,
-        project_owner: project.project_owner.id,
-        team: project.team.map((user) => user.id),
       })
       await fetch()
       isLoading.value = false

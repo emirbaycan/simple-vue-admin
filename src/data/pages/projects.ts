@@ -1,6 +1,4 @@
-import { sleep } from '../../services/utils'
-import projectsDb from './projects-db.json'
-import usersDb from './users-db.json'
+import { Project } from '../../pages/projects/types'
 
 // Simulate API calls
 export type Pagination = {
@@ -10,20 +8,14 @@ export type Pagination = {
 }
 
 export type Sorting = {
-  sortBy: keyof (typeof projectsDb)[number] | undefined
+  sortBy: keyof Array<Project>[number] | undefined
   sortingOrder: 'asc' | 'desc' | null
 }
 
-const getSortItem = (obj: any, sortBy: keyof (typeof projectsDb)[number]) => {
-  if (sortBy === 'project_owner') {
-    return obj.project_owner.fullname
-  }
+const api_url = import.meta.env.VITE_API_URL
 
-  if (sortBy === 'team') {
-    return obj.team.map((user: any) => user.fullname).join(', ')
-  }
-
-  if (sortBy === 'creation_date') {
+const getSortItem = (obj: any, sortBy: keyof Array<Project>[number]) => {
+  if (sortBy === 'created_at') {
     return new Date(obj[sortBy])
   }
 
@@ -31,13 +23,19 @@ const getSortItem = (obj: any, sortBy: keyof (typeof projectsDb)[number]) => {
 }
 
 export const getProjects = async (options: Sorting & Pagination) => {
-  await sleep(1000)
+  console.log('hi', api_url)
 
-  const projects = projectsDb.map((project) => ({
-    ...project,
-    project_owner: usersDb.find((user) => user.id === project.project_owner)! as (typeof usersDb)[number],
-    team: usersDb.filter((user) => project.team.includes(user.id)) as (typeof usersDb)[number][],
-  }))
+  const response = await fetch(api_url + 'projects', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  const result = await response.json()
+
+  const projects: Array<Project> = result.items
+  const count = result.count
 
   if (options.sortBy && options.sortingOrder) {
     projects.sort((a, b) => {
@@ -60,43 +58,53 @@ export const getProjects = async (options: Sorting & Pagination) => {
     pagination: {
       page: options.page,
       perPage: options.perPage,
-      total: projectsDb.length,
+      total: count,
     },
   }
 }
 
-export const addProject = async (project: Omit<(typeof projectsDb)[number], 'id' | 'creation_date'>) => {
-  await sleep(1000)
+export const addProject = async (project: Project) => {
+  const response = await fetch(api_url + 'projects', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(project),
+  })
 
-  const newProject = {
-    ...project,
-    id: projectsDb.length + 1,
-    creation_date: new Date().toLocaleDateString('gb', { day: 'numeric', month: 'short', year: 'numeric' }),
-  }
-
-  projectsDb.push(newProject)
+  const result = await response.json()
+  const newProject: Project = result.item
 
   return {
     ...newProject,
-    project_owner: usersDb.find((user) => user.id === project.project_owner)! as (typeof usersDb)[number],
-    team: usersDb.filter((user) => project.team.includes(user.id)) as (typeof usersDb)[number][],
   }
 }
 
-export const updateProject = async (project: (typeof projectsDb)[number]) => {
-  await sleep(1000)
+export const updateProject = async (project: Project) => {
+  const response = await fetch(api_url + 'projects', {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(project),
+  })
 
-  const index = projectsDb.findIndex((p) => p.id === project.id)
-  projectsDb[index] = project
+  const result = await response.json()
+  const newProject: Project = result.item
 
-  return project
+  return newProject
 }
 
-export const removeProject = async (project: (typeof projectsDb)[number]) => {
-  await sleep(1000)
+export const removeProject = async (project: Project) => {
+  const response = await fetch(api_url + 'projects', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(project),
+  })
 
-  const index = projectsDb.findIndex((p) => p.id === project.id)
-  projectsDb.splice(index, 1)
+  const result = await response.json()
 
-  return project
+  return result
 }
