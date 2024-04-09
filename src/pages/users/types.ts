@@ -6,7 +6,7 @@ export type User = {
   email: string
   username: string
   role: UserRole
-  avatar: string
+  avatar: string | File
   notes: string
   active: boolean
 }

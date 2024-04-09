@@ -75,15 +75,6 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
     <VaCardContent>
       <div class="flex flex-col md:flex-row gap-2 mb-2 justify-between">
         <div class="flex flex-col md:flex-row gap-2 justify-start">
-          <VaButtonToggle
-            v-model="filters.isActive"
-            color="background-element"
-            border-color="background-element"
-            :options="[
-              { label: 'Active', value: true },
-              { label: 'Inactive', value: false },
-            ]"
-          />
           <VaInput v-model="filters.search" placeholder="Search">
             <template #prependInner>
               <VaIcon name="search" color="secondary" size="small" />

@@ -23,8 +23,6 @@ const getSortItem = (obj: any, sortBy: keyof Array<Project>[number]) => {
 }
 
 export const getProjects = async (options: Sorting & Pagination) => {
-  console.log('hi', api_url)
-
   const response = await fetch(api_url + 'projects', {
     method: 'GET',
     headers: {
@@ -81,7 +79,7 @@ export const addProject = async (project: Project) => {
 }
 
 export const updateProject = async (project: Project) => {
-  const response = await fetch(api_url + 'projects', {
+  const response = await fetch(api_url + 'projects/' + project.id, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -96,7 +94,7 @@ export const updateProject = async (project: Project) => {
 }
 
 export const removeProject = async (project: Project) => {
-  const response = await fetch(api_url + 'projects', {
+  const response = await fetch(api_url + 'projects/' + project.id, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

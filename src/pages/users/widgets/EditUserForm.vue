@@ -3,7 +3,6 @@ import { PropType, computed, ref, watch } from 'vue'
 import { useForm } from 'vuestic-ui'
 import { User, UserRole } from '../types'
 import UserAvatar from './UserAvatar.vue'
-import { useProjects } from '../../projects/composables/useProjects'
 import { validators } from '../../../services/utils'
 
 const props = defineProps({
@@ -26,7 +25,6 @@ const defaultNewUser: User = {
   notes: '',
   email: '',
   active: true,
-  projects: [],
 }
 
 const newUser = ref<User>({ ...defaultNewUser })
@@ -62,12 +60,25 @@ watch(
 
 const avatar = ref<File>()
 
-const makeAvatarBlobUrl = (avatar: File) => {
-  return URL.createObjectURL(avatar)
-}
+watch(avatar, async (newAvatar) => {
+  if (!newAvatar) {
+    newUser.value.avatar = ''
+    return
+  }
 
-watch(avatar, (newAvatar) => {
-  newUser.value.avatar = newAvatar ? makeAvatarBlobUrl(newAvatar) : ''
+  const formData = new FormData()
+
+  formData.append('file', newAvatar)
+
+  const response = await fetch(import.meta.env.VITE_API_URL + 'image', {
+    method: 'POST',
+    body: formData,
+  })
+
+  const result = await response.json()
+  const image: any = result.data.item.name
+
+  newUser.value.avatar = 'http  ://localhost:1998/images/' + image
 })
 
 const form = useForm('add-user-form')
@@ -85,8 +96,6 @@ const roleSelectOptions: { text: Capitalize<UserRole>; value: UserRole }[] = [
   { text: 'User', value: 'user' },
   { text: 'Owner', value: 'owner' },
 ]
-
-const { projects } = useProjects({ pagination: ref({ page: 1, perPage: 9999, total: 10 }) })
 </script>
 
 <template>
@@ -134,20 +143,7 @@ const { projects } = useProjects({ pagination: ref({ page: 1, perPage: 9999, tot
           :rules="[validators.required, validators.email]"
           name="email"
         />
-        <VaSelect
-          v-model="newUser.projects"
-          label="Projects"
-          class="w-full sm:w-1/2"
-          :options="projects"
-          :rules="[validators.required]"
-          name="projects"
-          text-by="project_name"
-          track-by="id"
-          multiple
-          :max-visible-options="2"
-        />
       </div>
-
       <div class="flex gap-4 w-full">
         <div class="w-1/2">
           <VaSelect

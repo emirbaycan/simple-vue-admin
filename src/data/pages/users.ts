@@ -1,21 +1,5 @@
 import { sleep } from '../../services/utils'
 import { User } from './../../pages/users/types'
-import usersDb from './users-db.json'
-import projectsDb from './projects-db.json'
-import { Project } from '../../pages/projects/types'
-
-export const users = usersDb as User[]
-
-const getUserProjects = (userId: number | string) => {
-  return projectsDb
-    .filter((project) => project.team.includes(Number(userId)))
-    .map((project) => ({
-      ...project,
-      project_owner: users.find((user) => user.id === project.project_owner)!,
-      team: project.team.map((userId) => users.find((user) => user.id === userId)!),
-      status: project.status as Project['status'],
-    }))
-}
 
 // Simulate API calls
 
@@ -31,9 +15,10 @@ export type Sorting = {
 }
 
 export type Filters = {
-  isActive: boolean
   search: string
 }
+
+const api_url = import.meta.env.VITE_API_URL
 
 const getSortItem = (obj: any, sortBy: string) => {
   if (sortBy === 'projects') {
@@ -45,17 +30,25 @@ const getSortItem = (obj: any, sortBy: string) => {
 
 export const getUsers = async (filters: Partial<Filters & Pagination & Sorting>) => {
   await sleep(1000)
-  const { isActive, search, sortBy, sortingOrder } = filters
-  let filteredUsers = users
+  const { search, sortBy, sortingOrder } = filters
 
-  filteredUsers = filteredUsers.filter((user) => user.active === isActive)
+  const response = await fetch(api_url + 'users', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  const result = await response.json()
+
+  const users: Array<User> = result.items
+  const count = result.count
+
+  let filteredUsers = users
 
   if (search) {
     filteredUsers = filteredUsers.filter((user) => user.fullname.toLowerCase().includes(search.toLowerCase()))
   }
-
-  filteredUsers = filteredUsers.map((user) => ({ ...user, projects: getUserProjects(user.id) }))
-
   if (sortBy && sortingOrder) {
     filteredUsers = filteredUsers.sort((a, b) => {
       const first = getSortItem(a, sortBy)
@@ -76,26 +69,53 @@ export const getUsers = async (filters: Partial<Filters & Pagination & Sorting>)
     pagination: {
       page,
       perPage,
-      total: filteredUsers.length,
+      total: count,
     },
   }
 }
 
 export const addUser = async (user: User) => {
-  await sleep(1000)
-  users.unshift(user)
+  const response = await fetch(api_url + 'users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user),
+  })
+
+  const result = await response.json()
+  const newUser: User = result.item
+
+  return {
+    ...newUser,
+  }
 }
 
 export const updateUser = async (user: User) => {
-  await sleep(1000)
-  const index = users.findIndex((u) => u.id === user.id)
-  users[index] = user
+  const response = await fetch(api_url + 'users/' + user.id, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user),
+  })
+
+  const result = await response.json()
+  const newUser: User = result.item
+
+  return newUser
 }
 
 export const removeUser = async (user: User) => {
-  await sleep(1000)
-  users.splice(
-    users.findIndex((u) => u.id === user.id),
-    1,
-  )
+  const response = await fetch(api_url + 'users/' + user.id, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user),
+  })
+
+  const result = await response.json()
+
+  return result
 }
