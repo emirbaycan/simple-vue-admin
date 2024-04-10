@@ -26,10 +26,6 @@ const newProject = ref({ ...defaultNewProject })
 
 const isFormHasUnsavedChanges = computed(() => {
   return Object.keys(newProject.value).some((key) => {
-    if (key === 'team') {
-      return false
-    }
-
     return (
       newProject.value[key as keyof EmptyProject] !== (props.project ?? defaultNewProject)?.[key as keyof EmptyProject]
     )

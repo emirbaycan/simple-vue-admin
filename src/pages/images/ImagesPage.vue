@@ -1,49 +1,49 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import UsersTable from './widgets/UsersTable.vue'
-import EditUserForm from './widgets/EditUserForm.vue'
-import { User } from './types'
-import { useUsers } from './composables/useUsers'
+import ImageTable from './widgets/ImageTable.vue'
+import EditImageForm from './widgets/EditImageForm.vue'
+import { Image } from './types'
+import { useItems } from './composables/useImages'
 import { useModal, useToast } from 'vuestic-ui'
 
-const doShowEditUserModal = ref(false)
+const doShowEditImageModal = ref(false)
 
-const { users, isLoading, filters, sorting, pagination, ...usersApi } = useUsers()
+const { items, isLoading, filters, sorting, pagination, ...itemsApi } = useItems()
 
-const userToEdit = ref<User | null>(null)
+const itemToEdit = ref<Image | null>(null)
 
-const showEditUserModal = (user: User) => {
-  userToEdit.value = user
-  doShowEditUserModal.value = true
+const showEditImageModal = (item: Image) => {
+  itemToEdit.value = item
+  doShowEditImageModal.value = true
 }
 
-const showAddUserModal = () => {
-  userToEdit.value = null
-  doShowEditUserModal.value = true
+const showAddImageModal = () => {
+  itemToEdit.value = null
+  doShowEditImageModal.value = true
 }
 
 const { init: notify } = useToast()
 
-const onUserSaved = async (user: User) => {
-  if (userToEdit.value) {
-    await usersApi.update(user)
+const onImageSaved = async (item: Image) => {
+  if (itemToEdit.value) {
+    await itemsApi.update(item)
     notify({
-      message: `${user.fullname} has been updated`,
+      message: `${item.name} has been updated`,
       color: 'success',
     })
   } else {
-    usersApi.add(user)
+    itemsApi.add(item)
     notify({
-      message: `${user.fullname} has been created`,
+      message: `${item.name} has been created`,
       color: 'success',
     })
   }
 }
 
-const onUserDelete = async (user: User) => {
-  await usersApi.remove(user)
+const onImageDelete = async (item: Image) => {
+  await itemsApi.remove(item)
   notify({
-    message: `${user.fullname} has been deleted`,
+    message: `${item.name} has been deleted`,
     color: 'success',
   })
 }
@@ -69,7 +69,7 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
 </script>
 
 <template>
-  <h1 class="page-title">Users</h1>
+  <h1 class="page-title">Images</h1>
 
   <VaCard>
     <VaCardContent>
@@ -81,39 +81,39 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
             </template>
           </VaInput>
         </div>
-        <VaButton @click="showAddUserModal">Add User</VaButton>
+        <VaButton @click="showAddImageModal">Add Image</VaButton>
       </div>
 
-      <UsersTable
+      <ImageTable
         v-model:sort-by="sorting.sortBy"
         v-model:sorting-order="sorting.sortingOrder"
-        :users="users"
+        :items="items"
         :loading="isLoading"
         :pagination="pagination"
-        @editUser="showEditUserModal"
-        @deleteUser="onUserDelete"
+        @edit="showEditImageModal"
+        @delete="onImageDelete"
       />
     </VaCardContent>
   </VaCard>
 
   <VaModal
     v-slot="{ cancel, ok }"
-    v-model="doShowEditUserModal"
+    v-model="doShowEditImageModal"
     size="small"
     mobile-fullscreen
     close-button
     hide-default-actions
     :before-cancel="beforeEditFormModalClose"
   >
-    <h1 class="va-h5">{{ userToEdit ? 'Edit user' : 'Add user' }}</h1>
-    <EditUserForm
+    <h1 class="va-h5">{{ itemToEdit ? 'Edit item' : 'Add item' }}</h1>
+    <EditImageForm
       ref="editFormRef"
-      :user="userToEdit"
-      :save-button-label="userToEdit ? 'Save' : 'Add'"
+      :item="itemToEdit"
+      :save-button-label="itemToEdit ? 'Save' : 'Add'"
       @close="cancel"
       @save="
-        (user) => {
-          onUserSaved(user)
+        (item) => {
+          onImageSaved(item)
           ok()
         }
       "

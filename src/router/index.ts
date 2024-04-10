@@ -39,17 +39,17 @@ const routes: Array<RouteRecordRaw> = [
       {
         name: 'testimonials',
         path: 'testimonials',
-        component: () => import('../pages/projects/ProjectsPage.vue'),
+        component: () => import('../pages/testimonials/TestimonialsPage.vue'),
       },
       {
         name: 'jobs',
         path: 'jobs',
-        component: () => import('../pages/projects/ProjectsPage.vue'),
+        component: () => import('../pages/jobs/JobsPage.vue'),
       },
       {
         name: 'images',
         path: 'images',
-        component: () => import('../pages/projects/ProjectsPage.vue'),
+        component: () => import('../pages/images/ImagesPage.vue'),
       },
       {
         name: 'details',
