@@ -51,7 +51,7 @@ watch(image, async (newImage) => {
 
   formData.append('file', newImage)
 
-  const response = await fetch(import.meta.env.VITE_API_URL + 'images', {
+  const response = await fetch(import.meta.env.VITE_API_URL + 'image', {
     method: 'POST',
     body: formData,
   })

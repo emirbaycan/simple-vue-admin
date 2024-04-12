@@ -26,7 +26,7 @@ const getSortItem = (obj: any, sortBy: string) => {
 export const getItems = async (filters: Partial<Filters & Pagination & Sorting>) => {
   const { search, sortBy, sortingOrder } = filters
 
-  const response = await fetch(api_url + 'images', {
+  const response = await fetch(api_url + 'images?page=' + filters.page + '&limit=' + filters.perPage, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export const getItems = async (filters: Partial<Filters & Pagination & Sorting>)
 
   const { page = 1, perPage = 10 } = filters || {}
   return {
-    data: filteredItems.slice((page - 1) * perPage, page * perPage),
+    data: filteredItems,
     pagination: {
       page,
       perPage,
