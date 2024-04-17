@@ -1,14 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useLocalStorage } from '@vueuse/core'
 import { useItems } from './composables/useJobs'
-import JobCards from './widgets/JobsCards.vue'
 import JobTable from './widgets/JobsTable.vue'
 import EditJobForm from './widgets/EditJobForm.vue'
 import { Job } from './types'
 import { useModal, useToast } from 'vuestic-ui'
-
-const doShowAsCards = useLocalStorage('items-view', true)
 
 const { items, update, add, isLoading, remove, pagination, sorting } = useItems()
 
@@ -90,23 +86,10 @@ const beforeEditFormModalClose = async (hide: () => unknown) => {
   <VaCard>
     <VaCardContent>
       <div class="flex flex-col md:flex-row gap-2 mb-2 justify-between">
-        <div class="flex flex-col md:flex-row gap-2 justify-start">
-          <VaButtonToggle
-            v-model="doShowAsCards"
-            color="background-element"
-            border-color="background-element"
-            :options="[
-              { label: 'Cards', value: true },
-              { label: 'Table', value: false },
-            ]"
-          />
-        </div>
+        <div class="flex flex-col md:flex-row gap-2 justify-start"></div>
         <VaButton icon="add" @click="createNewItem">Job</VaButton>
       </div>
-
-      <JobCards v-if="doShowAsCards" :items="items" :loading="isLoading" @edit="editItem" @delete="onItemDeleted" />
       <JobTable
-        v-else
         v-model:sort-by="sorting.sortBy"
         v-model:sorting-order="sorting.sortingOrder"
         v-model:pagination="pagination"

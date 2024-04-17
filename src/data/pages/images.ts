@@ -17,7 +17,7 @@ export type Filters = {
   search: string
 }
 
-const api_url = import.meta.env.VITE_API_URL
+const admin_api_url = import.meta.env.VITE_API_URL + 'api/admin/'
 
 const getSortItem = (obj: any, sortBy: string) => {
   return obj[sortBy]
@@ -26,11 +26,12 @@ const getSortItem = (obj: any, sortBy: string) => {
 export const getItems = async (filters: Partial<Filters & Pagination & Sorting>) => {
   const { search, sortBy, sortingOrder } = filters
 
-  const response = await fetch(api_url + 'images?page=' + filters.page + '&limit=' + filters.perPage, {
+  const response = await fetch(admin_api_url + 'images?page=' + filters.page + '&limit=' + filters.perPage, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
   })
 
   const result = await response.json()
@@ -69,11 +70,12 @@ export const getItems = async (filters: Partial<Filters & Pagination & Sorting>)
 }
 
 export const addItem = async (item: Image) => {
-  const response = await fetch(api_url + 'images', {
+  const response = await fetch(admin_api_url + 'images', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(item),
   })
 
@@ -86,11 +88,12 @@ export const addItem = async (item: Image) => {
 }
 
 export const updateItem = async (item: Image) => {
-  const response = await fetch(api_url + 'images/' + item.id, {
+  const response = await fetch(admin_api_url + 'images/' + item.id, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(item),
   })
 
@@ -101,11 +104,12 @@ export const updateItem = async (item: Image) => {
 }
 
 export const removeItem = async (item: Image) => {
-  const response = await fetch(api_url + 'images/' + item.id, {
+  const response = await fetch(admin_api_url + 'images/' + item.id, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(item),
   })
 

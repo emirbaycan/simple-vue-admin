@@ -17,7 +17,7 @@ export type Filters = {
   search: string
 }
 
-const api_url = import.meta.env.VITE_API_URL
+const admin_api_url = import.meta.env.VITE_API_URL + 'api/admin/'
 
 const getSortItem = (obj: any, sortBy: string) => {
   if (sortBy === 'projects') {
@@ -30,11 +30,12 @@ const getSortItem = (obj: any, sortBy: string) => {
 export const getUsers = async (filters: Partial<Filters & Pagination & Sorting>) => {
   const { search, sortBy, sortingOrder } = filters
 
-  const response = await fetch(api_url + 'users', {
+  const response = await fetch(admin_api_url + 'users', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
   })
 
   const result = await response.json()
@@ -73,11 +74,12 @@ export const getUsers = async (filters: Partial<Filters & Pagination & Sorting>)
 }
 
 export const addUser = async (user: User) => {
-  const response = await fetch(api_url + 'users', {
+  const response = await fetch(admin_api_url + 'users', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(user),
   })
 
@@ -90,11 +92,12 @@ export const addUser = async (user: User) => {
 }
 
 export const updateUser = async (user: User) => {
-  const response = await fetch(api_url + 'users/' + user.id, {
+  const response = await fetch(admin_api_url + 'users/' + user.id, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(user),
   })
 
@@ -105,11 +108,12 @@ export const updateUser = async (user: User) => {
 }
 
 export const removeUser = async (user: User) => {
-  const response = await fetch(api_url + 'users/' + user.id, {
+  const response = await fetch(admin_api_url + 'users/' + user.id, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(user),
   })
 

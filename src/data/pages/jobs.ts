@@ -12,7 +12,7 @@ export type Sorting = {
   sortingOrder: 'asc' | 'desc' | null
 }
 
-const api_url = import.meta.env.VITE_API_URL
+const admin_api_url = import.meta.env.VITE_API_URL + 'api/admin/'
 
 const getSortItem = (obj: any, sortBy: keyof Array<Job>[number]) => {
   if (sortBy === 'created_at') {
@@ -23,11 +23,12 @@ const getSortItem = (obj: any, sortBy: keyof Array<Job>[number]) => {
 }
 
 export const getItems = async (options: Sorting & Pagination) => {
-  const response = await fetch(api_url + 'jobs', {
+  const response = await fetch(admin_api_url + 'jobs', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
   })
 
   const result = await response.json()
@@ -62,11 +63,12 @@ export const getItems = async (options: Sorting & Pagination) => {
 }
 
 export const addItem = async (item: Job) => {
-  const response = await fetch(api_url + 'jobs', {
+  const response = await fetch(admin_api_url + 'jobs', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(item),
   })
 
@@ -79,11 +81,12 @@ export const addItem = async (item: Job) => {
 }
 
 export const updateItem = async (item: Job) => {
-  const response = await fetch(api_url + 'jobs/' + item.id, {
+  const response = await fetch(admin_api_url + 'jobs/' + item.id, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(item),
   })
 
@@ -94,11 +97,12 @@ export const updateItem = async (item: Job) => {
 }
 
 export const removeItem = async (item: Job) => {
-  const response = await fetch(api_url + 'jobs/' + item.id, {
+  const response = await fetch(admin_api_url + 'jobs/' + item.id, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(item),
   })
 

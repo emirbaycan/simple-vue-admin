@@ -12,7 +12,7 @@ export type Sorting = {
   sortingOrder: 'asc' | 'desc' | null
 }
 
-const api_url = import.meta.env.VITE_API_URL
+const admin_api_url = import.meta.env.VITE_API_URL + 'api/admin/'
 
 const getSortItem = (obj: any, sortBy: keyof Array<Project>[number]) => {
   if (sortBy === 'created_at') {
@@ -23,11 +23,12 @@ const getSortItem = (obj: any, sortBy: keyof Array<Project>[number]) => {
 }
 
 export const getProjects = async (options: Sorting & Pagination) => {
-  const response = await fetch(api_url + 'projects', {
+  const response = await fetch(admin_api_url + 'projects', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
   })
 
   const result = await response.json()
@@ -62,11 +63,12 @@ export const getProjects = async (options: Sorting & Pagination) => {
 }
 
 export const addProject = async (project: Project) => {
-  const response = await fetch(api_url + 'projects', {
+  const response = await fetch(admin_api_url + 'projects', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(project),
   })
 
@@ -79,11 +81,12 @@ export const addProject = async (project: Project) => {
 }
 
 export const updateProject = async (project: Project) => {
-  const response = await fetch(api_url + 'projects/' + project.id, {
+  const response = await fetch(admin_api_url + 'projects/' + project.id, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(project),
   })
 
@@ -94,11 +97,12 @@ export const updateProject = async (project: Project) => {
 }
 
 export const removeProject = async (project: Project) => {
-  const response = await fetch(api_url + 'projects/' + project.id, {
+  const response = await fetch(admin_api_url + 'projects/' + project.id, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(project),
   })
 

@@ -12,7 +12,7 @@ export type Sorting = {
   sortingOrder: 'asc' | 'desc' | null
 }
 
-const api_url = import.meta.env.VITE_API_URL
+const admin_api_url = import.meta.env.VITE_API_URL + 'api/admin/'
 
 const getSortItem = (obj: any, sortBy: keyof Array<Testimonial>[number]) => {
   if (sortBy === 'created_at') {
@@ -23,11 +23,12 @@ const getSortItem = (obj: any, sortBy: keyof Array<Testimonial>[number]) => {
 }
 
 export const getItems = async (options: Sorting & Pagination) => {
-  const response = await fetch(api_url + 'testimonials', {
+  const response = await fetch(admin_api_url + 'testimonials', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
   })
 
   const result = await response.json()
@@ -62,11 +63,12 @@ export const getItems = async (options: Sorting & Pagination) => {
 }
 
 export const addItem = async (item: Testimonial) => {
-  const response = await fetch(api_url + 'testimonials', {
+  const response = await fetch(admin_api_url + 'testimonials', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(item),
   })
 
@@ -79,11 +81,12 @@ export const addItem = async (item: Testimonial) => {
 }
 
 export const updateItem = async (item: Testimonial) => {
-  const response = await fetch(api_url + 'testimonials/' + item.id, {
+  const response = await fetch(admin_api_url + 'testimonials/' + item.id, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(item),
   })
 
@@ -94,11 +97,12 @@ export const updateItem = async (item: Testimonial) => {
 }
 
 export const removeItem = async (item: Testimonial) => {
-  const response = await fetch(api_url + 'testimonials/' + item.id, {
+  const response = await fetch(admin_api_url + 'testimonials/' + item.id, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(item),
   })
 

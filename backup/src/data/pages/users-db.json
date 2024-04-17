@@ -25,7 +25,7 @@
     "email": "ebrown@gmail.com",
     "username": "ebrown",
     "role": "user",
-    "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+    "avatar": "https://randomuser.me/portraits/men/1.jpg",
     "active": true,
     "notes": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum."
   },
@@ -45,7 +45,7 @@
     "email": "kevin@gmail.com",
     "username": "kevin13",
     "role": "user",
-    "avatar": "https://randomuser.me/api/portraits/men/2.jpg",
+    "avatar": "https://randomuser.me/portraits/men/2.jpg",
     "active": true,
     "notes": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum."
   },
@@ -55,7 +55,7 @@
     "email": "martin@gmail.com",
     "username": "martin3",
     "role": "user",
-    "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
+    "avatar": "https://randomuser.me/portraits/men/3.jpg",
     "active": true,
     "notes": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum."
   },
@@ -126,7 +126,7 @@
     "email": "Willard23@gmail.com",
     "username": "Clementine72",
     "role": "user",
-    "avatar": "https://randomuser.me/api/portraits/men/4.jpg",
+    "avatar": "https://randomuser.me/portraits/men/4.jpg",
     "notes": "sed asperiores sed"
   },
   {
@@ -136,7 +136,7 @@
     "email": "Amya51@hotmail.com",
     "username": "Madalyn_Brekke55",
     "role": "user",
-    "avatar": "https://randomuser.me/api/portraits/men/5.jpg",
+    "avatar": "https://randomuser.me/portraits/men/5.jpg",
     "notes": "architecto amet deleniti"
   },
   {
@@ -146,7 +146,7 @@
     "email": "Granville_Lebsack38@yahoo.com",
     "role": "user",
     "username": "Vivienne98",
-    "avatar": "https://randomuser.me/api/portraits/men/6.jpg",
+    "avatar": "https://randomuser.me/portraits/men/6.jpg",
     "notes": "provident ipsam recusandae"
   },
   {
@@ -156,7 +156,7 @@
     "email": "Toni2@yahoo.com",
     "role": "user",
     "username": "Norwood79",
-    "avatar": "https://randomuser.me/api/portraits/men/7.jpg",
+    "avatar": "https://randomuser.me/portraits/men/7.jpg",
     "notes": "aut quaerat totam"
   },
   {
@@ -166,7 +166,7 @@
     "email": "Lisette41@yahoo.com",
     "role": "user",
     "username": "Dariana_Schulist",
-    "avatar": "https://randomuser.me/api/portraits/men/8.jpg",
+    "avatar": "https://randomuser.me/portraits/men/8.jpg",
     "notes": "minima harum ut"
   },
   {
@@ -176,7 +176,7 @@
     "email": "Israel88@hotmail.com",
     "role": "user",
     "username": "Crystal.Brakus29",
-    "avatar": "https://randomuser.me/api/portraits/men/9.jpg",
+    "avatar": "https://randomuser.me/portraits/men/9.jpg",
     "notes": "sint culpa voluptatem"
   },
   {
@@ -186,7 +186,7 @@
     "email": "Darien_Mayer@gmail.com",
     "role": "user",
     "username": "Cordie.Grant",
-    "avatar": "https://randomuser.me/api/portraits/men/10.jpg",
+    "avatar": "https://randomuser.me/portraits/men/10.jpg",
     "notes": "officia autem aliquam"
   },
   {
@@ -196,7 +196,7 @@
     "email": "Cristal.Sauer@yahoo.com",
     "role": "user",
     "username": "Peggie.Runolfsdottir",
-    "avatar": "https://randomuser.me/api/portraits/men/11.jpg",
+    "avatar": "https://randomuser.me/portraits/men/11.jpg",
     "notes": "rerum rerum rerum"
   },
   {
@@ -206,7 +206,7 @@
     "email": "Shanny30@gmail.com",
     "role": "user",
     "username": "Phoebe67",
-    "avatar": "https://randomuser.me/api/portraits/men/12.jpg",
+    "avatar": "https://randomuser.me/portraits/men/12.jpg",
     "notes": "voluptatibus et soluta"
   },
   {
@@ -216,7 +216,7 @@
     "email": "Tressie.Bruen45@gmail.com",
     "role": "user",
     "username": "Percy37",
-    "avatar": "https://randomuser.me/api/portraits/men/13.jpg",
+    "avatar": "https://randomuser.me/portraits/men/13.jpg",
     "notes": "aut id molestiae"
   },
   {
@@ -226,7 +226,7 @@
     "email": "Anastasia85@hotmail.com",
     "role": "user",
     "username": "Kali84",
-    "avatar": "https://randomuser.me/api/portraits/men/14.jpg",
+    "avatar": "https://randomuser.me/portraits/men/14.jpg",
     "notes": "magnam eum aliquam"
   },
   {
@@ -236,7 +236,7 @@
     "email": "Tess56@gmail.com",
     "role": "user",
     "username": "Robyn.Kris",
-    "avatar": "https://randomuser.me/api/portraits/men/0.jpg",
+    "avatar": "https://randomuser.me/portraits/men/0.jpg",
     "notes": "similique architecto in"
   },
   {
@@ -246,7 +246,7 @@
     "email": "Bruce49@yahoo.com",
     "role": "user",
     "username": "Clemmie.Kutch",
-    "avatar": "https://randomuser.me/api/portraits/men/16.jpg",
+    "avatar": "https://randomuser.me/portraits/men/16.jpg",
     "notes": "rerum quae dolorem"
   },
   {
@@ -256,7 +256,7 @@
     "email": "Jude38@hotmail.com",
     "role": "user",
     "username": "Neal70",
-    "avatar": "https://randomuser.me/api/portraits/men/17.jpg",
+    "avatar": "https://randomuser.me/portraits/men/17.jpg",
     "notes": "iure dolor provident"
   },
   {
@@ -266,7 +266,7 @@
     "role": "user",
     "username": "Neal_Thompson84",
     "active": true,
-    "avatar": "https://randomuser.me/api/portraits/men/18.jpg",
+    "avatar": "https://randomuser.me/portraits/men/18.jpg",
     "notes": "quae eos placeat"
   },
   {
@@ -276,7 +276,7 @@
     "role": "user",
     "username": "Esta.Hickle",
     "active": true,
-    "avatar": "https://randomuser.me/api/portraits/men/19.jpg",
+    "avatar": "https://randomuser.me/portraits/men/19.jpg",
     "notes": "qui cumque unde"
   },
   {
@@ -286,7 +286,7 @@
     "role": "user",
     "username": "Jade.Kuhlman90",
     "active": true,
-    "avatar": "https://randomuser.me/api/portraits/men/20.jpg",
+    "avatar": "https://randomuser.me/portraits/men/20.jpg",
     "notes": "exercitationem velit consectetur"
   }
 ]
