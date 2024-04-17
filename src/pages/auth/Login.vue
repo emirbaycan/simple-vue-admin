@@ -60,10 +60,22 @@ const formData = reactive({
   keepLoggedIn: false,
 })
 
-const submit = () => {
+const submit = async () => {
   if (validate()) {
-    init({ message: "You've successfully logged in", color: 'success' })
-    push({ name: 'dashboard' })
+    const response = await fetch(import.meta.env.VITE_API_URL + 'auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+
+    const result = await response.json()
+
+    if (result.status == 'success') {
+      init({ message: "You've successfully logged in", color: 'success' })
+      push({ name: 'dashboard' })
+    }
   }
 }
 </script>

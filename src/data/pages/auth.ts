@@ -35,7 +35,6 @@ export const getUsers = async (filters: Partial<Filters & Pagination & Sorting>)
     headers: {
       'Content-Type': 'application/json',
     },
-    credentials: 'include',
   })
 
   const result = await response.json()
